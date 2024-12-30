@@ -20,21 +20,9 @@
             font-size: 18px; 
             line-height: 1.5; /* Espaciado entre líneas para mayor legibilidad */
         }
-        .strikethrough {
-            text-decoration: line-through; /* Efecto de tachado */
-            color: black; /* Color del texto tachado */
-            position: relative;
-            display: inline-block;
-        }
-        .marker {
-            background-color: black; /* Color del marcador negro */
-            position: absolute;
-            height: 2px; /* Altura del marcador */
-            width: 100%; /* Ancho del marcador */
-            top: 50%; /* Centrado verticalmente */
-            left: 0;
-            transform: translateY(-50%); /* Ajusta para que esté centrado */
-            transition: width 1s ease; /* Animación de deslizamiento */
+        .centered {
+            text-align: center; /* Centrando el texto */
+            font-weight: bold; /* Negrita */
         }
         .blink {
             animation: blink-animation 1s steps(1, end) infinite; /* Parpadeo */
@@ -42,22 +30,17 @@
         @keyframes blink-animation {
             50% { opacity: 0; }
         }
-        .centered {
-            text-align: center; /* Centrando el texto */
-            font-weight: bold; /* Negrita */
-        }
     </style>
 </head>
 <body>
-    <h1>Hola Yin 🫶🏻 </h1>
+    <h1>Hola Yin ❤️</h1>
     <p id="typed-text"></p>
-    <p id="strikethrough-text" style="color: black; display: none;"></p> <!-- Línea adicional para el efecto de tachado -->
     <p id="farewell" style="color: black;"></p> <!-- Mensaje de despedida -->
-    <p id="today-text" class="centered" style="display: none;"></p> <!-- Texto "Hoy me parece..." -->
+    <p id="today-text" class="centered" style="display: none; margin-top: 20px;"></p> <!-- Texto "Hoy me parece..." -->
 
     <script>
         const text = "Posiblemente veas esto por la mañana o casi medio día, entonces buenos diasss ☀️ espero durmieras bieen, me tomé el tiempo de hacer esto para ti, porque realmente me quedé toda la tarde pensando en lo mucho que me gusta el compartir tiempo y escucharla, es un algo que no se siente a menudo y por eso me veo en la enorme necesidad de expresarlo con algo como esto que estás leyendo, amo mucho dar detalles y pensé este te gustaría 💖" ;
-        const strikethroughMessage = "Hoy me parece fue una gran idea escribirte"; // Mensaje para el efecto de tachado
+        const strikethroughMessage = "Hoy me parece fue una gran idea escribirte"; // Mensaje para mostrar
         const farewellMessage = "Con cariño, Mauricio ✨️"; // Mensaje de despedida
         let index = 0;
 
@@ -65,61 +48,39 @@
             if (index < text.length) {
                 document.getElementById("typed-text").innerHTML += text.charAt(index);
                 index++;
-                setTimeout(typeText, 100); // Velocidad de aparición
+                setTimeout(typeText, 150); // Velocidad de aparición más lenta
             } else {
-                // Una vez que se ha escrito todo el texto, comienza a mostrar el texto con tachado
+                // Una vez que se ha escrito todo el texto, muestra el mensaje de despedida y el texto "Hoy me parece..."
                 setTimeout(() => {
-                    displayStrikethroughText();
-                }, 500); // Espera un momento antes de mostrar la línea
+                    displayFarewellMessage(); // Muestra el mensaje de despedida
+                    displayTodayText(); // Muestra el texto "Hoy me parece..."
+                }, 500); // Espera un momento antes de mostrar
             }
-        }
-
-        function displayStrikethroughText() {
-            const strikethroughElement = document.getElementById("strikethrough-text");
-            strikethroughElement.innerHTML = strikethroughMessage;
-            strikethroughElement.style.display = 'inline'; // Muestra el texto
-
-            // Añadir el "marcador" para el efecto de tachado
-            const marker = document.createElement('div');
-            marker.className = 'marker';
-            strikethroughElement.appendChild(marker);
-
-            // Iniciar la animación de tachado
-            setTimeout(() => {
-                marker.style.width = '100%'; // Asegura que el marcador cubra el texto
-            }, 100); // Espera un momento antes de comenzar a tachar
-
-            // Esperar a que termine el efecto de tachado y luego mostrar el mensaje de despedida
-            setTimeout(() => {
-                displayFarewellMessage(); // Muestra el mensaje de despedida
-                displayTodayText(); // Muestra el texto "Hoy me parece..."
-            }, 2000); // Tiempo para el efecto de tachado
         }
 
         function displayTodayText() {
             const todayElement = document.getElementById("today-text");
-            todayElement.innerHTML = strikethroughMessage; // Establece el mensaje de tachado
-            todayElement.style.display = 'block'; // Muestra el texto
+            todayElement.innerHTML = ""; // Limpia el contenido
             let todayIndex = 0;
 
             // Función para simular el efecto de máquina de escribir
             function typeTodayText() {
                 if (todayIndex < strikethroughMessage.length) {
-                    todayElement.innerHTML = strikethroughMessage.substring(0, todayIndex + 1);
+                    todayElement.innerHTML += strikethroughMessage.charAt(todayIndex);
                     todayIndex++;
-                    setTimeout(typeTodayText, 100); // Velocidad de aparición
+                    setTimeout(typeTodayText, 150); // Velocidad de aparición más lenta
                 } else {
                     // Al final, hacer parpadear la última letra
                     setTimeout(() => {
                         const lastLetter = todayElement.innerHTML.slice(-1);
                         todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
                         todayElement.classList.add('blink'); // Agrega la clase de parpadeo
-                        deleteLastLetter(lastLetter); // Comienza a eliminar
+                        deleteLastLetter(); // Comienza a eliminar
                     }, 500); // Espera un momento antes de comenzar a eliminar
                 }
             }
 
-            function deleteLastLetter(lastLetter) {
+            function deleteLastLetter() {
                 setTimeout(() => {
                     if (todayElement.innerHTML.length > 0) {
                         todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
@@ -129,9 +90,10 @@
                     if (todayElement.innerHTML.length > 0) {
                         deleteLastLetter(); // Continúa eliminando
                     }
-                }, 100); // Velocidad de eliminación
+                }, 200); // Velocidad de eliminación más lenta
             }
 
+            todayElement.style.display = 'block'; // Muestra el texto
             typeTodayText(); // Inicia el efecto de máquina de escribir
         }
 
