@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Carta</title>
+    <style>
+        body { 
+            font-family: Arial, sans-serif; 
+            padding: 20px; 
+            max-width: 600px; /* Ancho máximo para mejor legibilidad */
+            margin: auto; /* Centra el contenido en la página */
+            background-color: #DFC5FE; /* Color de fondo */
+            color: black; /* Color de letra */
+        }
+        h1 { 
+            color: #4CAF50; 
+        }
+        p { 
+            font-size: 18px; 
+            line-height: 1.5; /* Espaciado entre líneas para mayor legibilidad */
+        }
+    </style>
+</head>
+<body>
+    <h1>Hola Yin <3,</h1>
+    <p id="typed-text"></p>
+    <p>Con cariño,<br>Mauricio</p>
+
+    <script>
+        const text = "Posiblemente veas esto por la mañana o casi medio día, me tomé el tiempo de hacer esto para ti porque por supuesto lo vales, esto es un nada al lado de ese 'lo vales' pero este mensajito sería extremadamente largo y perdería la intención jajaja, es muy lindo conocer personas como tú, me refiero a una conexión muy extraña pero de ahí viene lo lindo <3";
+        let index = 0;
+
+        function typeText() {
+            if (index < text.length) {
+                document.getElementById("typed-text").innerHTML += text.charAt(index);
+                index++;
+                setTimeout(typeText, 50); // Cambia el número para ajustar la velocidad
+            }
+        }
+
+        typeText(); // Inicia la función al cargar la página
+    </script>
+</body>
+</html>
