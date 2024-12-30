@@ -36,6 +36,16 @@
             transform: translateY(-50%); /* Ajusta para que esté centrado */
             transition: width 1s ease; /* Animación de deslizamiento */
         }
+        .blink {
+            animation: blink-animation 1s steps(1, end) infinite; /* Parpadeo */
+        }
+        @keyframes blink-animation {
+            50% { opacity: 0; }
+        }
+        .centered {
+            text-align: center; /* Centrando el texto */
+            font-weight: bold; /* Negrita */
+        }
     </style>
 </head>
 <body>
@@ -43,9 +53,10 @@
     <p id="typed-text"></p>
     <p id="strikethrough-text" style="color: black; display: none;"></p> <!-- Línea adicional para el efecto de tachado -->
     <p id="farewell" style="color: black;"></p> <!-- Mensaje de despedida -->
+    <p id="today-text" class="centered" style="display: none;"></p> <!-- Texto "Hoy me parece..." -->
 
     <script>
-        const text = "Posiblemente veas esto por la mañana o casi medio día, entonces buenos diasss ☀️ espero durmieras bieen, me tomé el tiempo de hacer esto para ti, porque realmente me quedé toda la tarde pensando en lo mucho que me gusta el compartir tiempo y escucharla, es un algo que no se siente a menudo y por eso me veo en la enorme necesidad de expresarlo con algo como esto que estas leyendo, amo mucho dar detalles y pensé este te gustaría 💖";
+        const text = "Posiblemente veas esto por la mañana o casi medio día, entonces buenos diasss ☀️ espero durmieras bieen, me tomé el tiempo de hacer esto para ti, porque realmente me quedé toda la tarde pensando en lo mucho que me gusta el compartir tiempo y escucharla, es un algo que no se siente a menudo y por eso me veo en la enorme necesidad de expresarlo con algo como esto que estás leyendo, amo mucho dar detalles y pensé este te gustaría 💖" ;
         const strikethroughMessage = "Hoy me parece fue una gran idea escribirte"; // Mensaje para el efecto de tachado
         const farewellMessage = "Con cariño, Mauricio ✨️"; // Mensaje de despedida
         let index = 0;
@@ -81,7 +92,47 @@
             // Esperar a que termine el efecto de tachado y luego mostrar el mensaje de despedida
             setTimeout(() => {
                 displayFarewellMessage(); // Muestra el mensaje de despedida
+                displayTodayText(); // Muestra el texto "Hoy me parece..."
             }, 2000); // Tiempo para el efecto de tachado
+        }
+
+        function displayTodayText() {
+            const todayElement = document.getElementById("today-text");
+            todayElement.innerHTML = strikethroughMessage; // Establece el mensaje de tachado
+            todayElement.style.display = 'block'; // Muestra el texto
+            let todayIndex = 0;
+
+            // Función para simular el efecto de máquina de escribir
+            function typeTodayText() {
+                if (todayIndex < strikethroughMessage.length) {
+                    todayElement.innerHTML = strikethroughMessage.substring(0, todayIndex + 1);
+                    todayIndex++;
+                    setTimeout(typeTodayText, 100); // Velocidad de aparición
+                } else {
+                    // Al final, hacer parpadear la última letra
+                    setTimeout(() => {
+                        const lastLetter = todayElement.innerHTML.slice(-1);
+                        todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
+                        todayElement.classList.add('blink'); // Agrega la clase de parpadeo
+                        deleteLastLetter(lastLetter); // Comienza a eliminar
+                    }, 500); // Espera un momento antes de comenzar a eliminar
+                }
+            }
+
+            function deleteLastLetter(lastLetter) {
+                setTimeout(() => {
+                    if (todayElement.innerHTML.length > 0) {
+                        todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
+                    } else {
+                        todayElement.classList.remove('blink'); // Elimina el efecto de parpadeo
+                    }
+                    if (todayElement.innerHTML.length > 0) {
+                        deleteLastLetter(); // Continúa eliminando
+                    }
+                }, 100); // Velocidad de eliminación
+            }
+
+            typeTodayText(); // Inicia el efecto de máquina de escribir
         }
 
         function displayFarewellMessage() {
