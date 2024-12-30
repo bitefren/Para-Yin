@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -22,29 +21,31 @@
             line-height: 1.5; /* Espaciado entre líneas para mayor legibilidad */
         }
         .strikethrough {
+            text-decoration: line-through; /* Efecto de tachado */
+            color: black; /* Color del texto tachado */
             position: relative;
             display: inline-block;
         }
         .marker {
             background-color: black; /* Color del marcador negro */
             position: absolute;
-            height: 10px; /* Altura del marcador */
-            width: 100%;
+            height: 2px; /* Altura del marcador */
+            width: 100%; /* Ancho del marcador */
             top: 50%; /* Centrado verticalmente */
             left: 0;
             transform: translateY(-50%); /* Ajusta para que esté centrado */
-            transition: height 1s ease; /* Animación de deslizamiento */
+            transition: width 1s ease; /* Animación de deslizamiento */
         }
     </style>
 </head>
 <body>
-    <h1>Hola Yin ❤️,</h1>
+    <h1>Hola Yin ❤️</h1>
     <p id="typed-text"></p>
-    <p id="strikethrough-text" style="color: black;"></p> <!-- Línea adicional para el efecto de tachado -->
+    <p id="strikethrough-text" style="color: black; display: none;"></p> <!-- Línea adicional para el efecto de tachado -->
     <p id="farewell" style="color: black;"></p> <!-- Mensaje de despedida -->
 
     <script>
-        const text = "Posiblemente veas esto por la mañana o casi medio día, me tomé el tiempo de hacer esto para ti porque por supuesto lo vales, esto es un nada al lado de ese 'lo vales' pero este mensajito sería extremadamente largo y perdería la intención jajaja, es muy lindo conocer personas como tú, me refiero a una conexión muy extraña pero de ahí viene lo lindo 💖";
+        const text = "Posiblemente veas esto por la mañana o casi medio día, entonces buenos diasss ☀️ espero durmieras bieen, me tomé el tiempo de hacer esto para ti, porque realmente me quedé toda la tarde pensando en lo mucho que me gusta el compartir tiempo y escucharla, es un algo que no se siente a menudo y por eso me veo en la enorme necesidad de expresarlo con algo como esto que estas leyendo, amo mucho dar detalles y pensé este te gustaría 💖";
         const strikethroughMessage = "Hoy me parece fue una gran idea escribirte"; // Mensaje para el efecto de tachado
         const farewellMessage = "Con cariño, Mauricio ✨️"; // Mensaje de despedida
         let index = 0;
@@ -65,6 +66,7 @@
         function displayStrikethroughText() {
             const strikethroughElement = document.getElementById("strikethrough-text");
             strikethroughElement.innerHTML = strikethroughMessage;
+            strikethroughElement.style.display = 'inline'; // Muestra el texto
 
             // Añadir el "marcador" para el efecto de tachado
             const marker = document.createElement('div');
@@ -73,12 +75,11 @@
 
             // Iniciar la animación de tachado
             setTimeout(() => {
-                marker.style.height = '10px'; // Asegura que el marcador cubra el texto
+                marker.style.width = '100%'; // Asegura que el marcador cubra el texto
             }, 100); // Espera un momento antes de comenzar a tachar
 
             // Esperar a que termine el efecto de tachado y luego mostrar el mensaje de despedida
             setTimeout(() => {
-                strikethroughElement.innerHTML = ''; // Borra el texto después de tacharlo
                 displayFarewellMessage(); // Muestra el mensaje de despedida
             }, 2000); // Tiempo para el efecto de tachado
         }
