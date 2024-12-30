@@ -36,22 +36,13 @@
             transform: translateY(-100%); /* Inicialmente fuera de la vista */
             transition: transform 1s ease; /* Animación de deslizamiento */
         }
-        .fade-in {
-            opacity: 0;
-            animation: fadeIn 1s forwards; /* Animación de aparición */
-        }
-        @keyframes fadeIn {
-            to {
-                opacity: 1;
-            }
-        }
     </style>
 </head>
 <body>
     <h1>Hola Yin ❤️,</h1>
     <p id="typed-text"></p>
     <p id="strikethrough-text" style="color: black;"></p> <!-- Línea adicional para el efecto de tachado -->
-    <p id="farewell" class="fade-in"></p> <!-- Mensaje de despedida con animación -->
+    <p id="farewell" style="color: black;"></p> <!-- Mensaje de despedida -->
 
     <script>
         const text = "Posiblemente veas esto por la mañana o casi medio día, me tomé el tiempo de hacer esto para ti porque por supuesto lo vales, esto es un nada al lado de ese 'lo vales' pero este mensajito sería extremadamente largo y perdería la intención jajaja, es muy lindo conocer personas como tú, me refiero a una conexión muy extraña pero de ahí viene lo lindo 💖";
@@ -96,7 +87,6 @@
         function displayFarewellMessage() {
             const farewellElement = document.getElementById("farewell");
             farewellElement.innerHTML = farewellMessage; // Establece el mensaje de despedida
-            farewellElement.classList.add('fade-in'); // Añadir la clase de animación de desvanecimiento
         }
 
         typeText(); // Inicia la función al cargar la página
