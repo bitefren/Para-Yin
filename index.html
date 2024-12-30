@@ -33,7 +33,7 @@
     </style>
 </head>
 <body>
-    <h1>Hola Yin 🌷</h1>
+    <h1>Hola Yin ❤️</h1>
     <p id="typed-text"></p>
     <p id="farewell" style="color: black;"></p> <!-- Mensaje de despedida -->
     <p id="today-text" class="centered" style="display: none; margin-top: 20px;"></p> <!-- Texto "Hoy me parece..." -->
@@ -50,12 +50,19 @@
                 index++;
                 setTimeout(typeText, 150); // Velocidad de aparición más lenta
             } else {
-                // Una vez que se ha escrito todo el texto, muestra el mensaje de despedida y el texto "Hoy me parece..."
-                setTimeout(() => {
-                    displayFarewellMessage(); // Muestra el mensaje de despedida
-                    displayTodayText(); // Muestra el texto "Hoy me parece..."
-                }, 500); // Espera un momento antes de mostrar
+                // Una vez que se ha escrito todo el texto, muestra el mensaje de despedida
+                displayFarewellMessage(); // Muestra el mensaje de despedida
             }
+        }
+
+        function displayFarewellMessage() {
+            const farewellElement = document.getElementById("farewell");
+            farewellElement.innerHTML = farewellMessage; // Establece el mensaje de despedida
+            
+            // Espera 4 segundos antes de mostrar el texto "Hoy me parece..."
+            setTimeout(() => {
+                displayTodayText(); // Muestra el texto "Hoy me parece..."
+            }, 4000); // Retraso de 4 segundos
         }
 
         function displayTodayText() {
@@ -68,7 +75,7 @@
                 if (todayIndex < strikethroughMessage.length) {
                     todayElement.innerHTML += strikethroughMessage.charAt(todayIndex);
                     todayIndex++;
-                    setTimeout(typeTodayText, 150); // Velocidad de aparición más lenta
+                    setTimeout(typeTodayText, 250); // Velocidad de aparición más lenta
                 } else {
                     // Al final, hacer parpadear la última letra
                     setTimeout(() => {
@@ -76,7 +83,7 @@
                         todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
                         todayElement.classList.add('blink'); // Agrega la clase de parpadeo
                         deleteLastLetter(); // Comienza a eliminar
-                    }, 500); // Espera un momento antes de comenzar a eliminar
+                    }, 1000); // Espera 1 segundo antes de comenzar a eliminar
                 }
             }
 
@@ -90,16 +97,11 @@
                     if (todayElement.innerHTML.length > 0) {
                         deleteLastLetter(); // Continúa eliminando
                     }
-                }, 200); // Velocidad de eliminación más lenta
+                }, 300); // Velocidad de eliminación más lenta
             }
 
             todayElement.style.display = 'block'; // Muestra el texto
             typeTodayText(); // Inicia el efecto de máquina de escribir
-        }
-
-        function displayFarewellMessage() {
-            const farewellElement = document.getElementById("farewell");
-            farewellElement.innerHTML = farewellMessage; // Establece el mensaje de despedida
         }
 
         typeText(); // Inicia la función al cargar la página
