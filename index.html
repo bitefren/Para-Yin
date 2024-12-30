@@ -24,12 +24,6 @@
             text-align: center; /* Centrando el texto */
             font-weight: bold; /* Negrita */
         }
-        .blink {
-            animation: blink-animation 1s steps(1, end) infinite; /* Parpadeo */
-        }
-        @keyframes blink-animation {
-            50% { opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -77,25 +71,16 @@
                     todayIndex++;
                     setTimeout(typeTodayText, 250); // Velocidad de aparición más lenta
                 } else {
-                    // Al final, hacer parpadear la última letra
-                    setTimeout(() => {
-                        const lastLetter = todayElement.innerHTML.slice(-1);
-                        todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
-                        todayElement.classList.add('blink'); // Agrega la clase de parpadeo
-                        deleteLastLetter(); // Comienza a eliminar
-                    }, 1000); // Espera 1 segundo antes de comenzar a eliminar
+                    // Comienza a eliminar el texto
+                    deleteText(); // Comienza a eliminar
                 }
             }
 
-            function deleteLastLetter() {
+            function deleteText() {
                 setTimeout(() => {
                     if (todayElement.innerHTML.length > 0) {
                         todayElement.innerHTML = todayElement.innerHTML.slice(0, -1); // Elimina la última letra
-                    } else {
-                        todayElement.classList.remove('blink'); // Elimina el efecto de parpadeo
-                    }
-                    if (todayElement.innerHTML.length > 0) {
-                        deleteLastLetter(); // Continúa eliminando
+                        deleteText(); // Continúa eliminando
                     }
                 }, 300); // Velocidad de eliminación más lenta
             }
@@ -107,4 +92,4 @@
         typeText(); // Inicia la función al cargar la página
     </script>
 </body>
-</html
+</html>
